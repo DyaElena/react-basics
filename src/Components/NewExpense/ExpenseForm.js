@@ -1,18 +1,17 @@
-import { useState } from "react";
-import "./ExpenseForm.css";
+import { useState } from 'react';
+import './ExpenseForm.css';
 
 const ExpenseForm = (props) => {
-  const [enteredTitle, setEnteredTitle] = useState("");
-  const [enteredAmount, setEnteredAmount] = useState("");
-  const [enteredDate, setEnteredDate] = useState("");
-  const [shouldShowForm, setShouldShowForm] = useState(false);
+  const [enteredTitle, setEnteredTitle] = useState('');
+  const [enteredAmount, setEnteredAmount] = useState('');
+  const [enteredDate, setEnteredDate] = useState('');
   // const [userInput, setUserInput] = useState({
   //   enteredTitle: "",
   //   enteredAmount: "",
   //   enteredDate: "",
   // });
 
-  const submitHanlder = (event) => {
+  const submitHandler = (event) => {
     event.preventDefault();
 
     const expenseData = {
@@ -23,9 +22,9 @@ const ExpenseForm = (props) => {
 
     // console.log(expenseData);
     props.onSaveExpenseData(expenseData);
-    setEnteredTitle("");
-    setEnteredAmount("");
-    setEnteredDate("");
+    setEnteredTitle('');
+    setEnteredAmount('');
+    setEnteredDate('');
   };
 
   const titleChangeHandler = (event) => {
@@ -45,67 +44,54 @@ const ExpenseForm = (props) => {
     setEnteredDate(event.target.value);
   };
 
-  const showFormHandler = () => {
-    setShouldShowForm(!shouldShowForm);
-  };
-
-  // if (setShouldShowForm) {
-  //   return <button onClick={showFormHandler}>Add new expense</button>;
-  // }
-
   return (
-    <>
-      {!shouldShowForm && (
-        <button onClick={showFormHandler}>Add new expense</button>
-      )}
-
-      {shouldShowForm && (
-        <form onSubmit={submitHanlder}>
-          <div className="new-expense__controls">
-            <div className="new-expense__control">
-              <label>Title</label>
-              <input
-                type="text"
-                value={enteredTitle}
-                onChange={titleChangeHandler}
-              />
-            </div>
-          </div>
-          <div className="new-expense__controls">
-            <div className="new-expense__control">
-              <label>Amount</label>
-              <input
-                type="number"
-                value={enteredAmount}
-                min="0.01"
-                step="0.01"
-                onChange={amountChangeHandler}
-              />
-            </div>
-          </div>
-          <div className="new-expense__controls">
-            <div className="new-expense__control">
-              <label>Date</label>
-              <input
-                type="date"
-                value={enteredDate}
-                min="2019-01-01"
-                max="2022-12-31"
-                onChange={dateChangeHandler}
-              />
-            </div>
-          </div>
-          <div className="new-expense__actions">
-            <button type="submit" onClick={() => setShouldShowForm(false)}>
-              Cancel
-            </button>
-
-            <button type="submit">Add new expense</button>
-          </div>
-        </form>
-      )}
-    </>
+    <form onSubmit={submitHandler}>
+      <div className="new-expense__controls">
+        <div className="new-expense__control">
+          <label>Title</label>
+          <input
+            type="text"
+            value={enteredTitle}
+            onChange={titleChangeHandler}
+          />
+        </div>
+      </div>
+      <div className="new-expense__controls">
+        <div className="new-expense__control">
+          <label>Amount</label>
+          <input
+            type="number"
+            value={enteredAmount}
+            min="0.01"
+            step="0.01"
+            onChange={amountChangeHandler}
+          />
+        </div>
+      </div>
+      <div className="new-expense__controls">
+        <div className="new-expense__control">
+          <label>Date</label>
+          <input
+            type="date"
+            value={enteredDate}
+            min="2019-01-01"
+            max="2022-12-31"
+            onChange={dateChangeHandler}
+          />
+        </div>
+      </div>
+      <div className="new-expense__actions">
+        <button type="button" onClick={props.onCancel}>
+          Cancel
+        </button>
+        <button type="submit">Add new expense</button>
+      </div>
+    </form>
   );
+  /* we point at props.onCancel for a click on this button. So, this
+      function which we receive on onCancel prop is forwarded to the onClick
+      prop of the button. So, when we click on the button, onCancel function
+      is executed Cancel*/
 };
 
 export default ExpenseForm;
